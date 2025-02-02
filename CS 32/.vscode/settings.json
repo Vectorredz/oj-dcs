@@ -1,0 +1,14 @@
+{
+    "files.associations": {
+        "stdio.h": "c",
+        "compare": "c",
+        "stdlib.h": "c",
+        "downward_path.h": "c",
+        "assert.h": "c",
+        "limits": "c",
+        "stdint.h": "c",
+        "cstdint": "c",
+        "type_traits": "c",
+        "string_view": "c"
+    }
+}
