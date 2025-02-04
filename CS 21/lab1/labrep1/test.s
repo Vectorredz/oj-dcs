@@ -4,6 +4,7 @@ buffer_x: .zero 30 # s2
 intbuffer_x: .zero 30 # s3
 buffer_y: .zero 30 # s4
 intbuffer_y: .zero 30 # s5
+
 prompt1: .string "enter x: "
 prompt2: .string "enter y: "
 prompt3: .string "VIVA"
@@ -19,6 +20,8 @@ main_x:
     # # <-------------- process input for y ---------------> #
     # call process_y
 main_y:
+    
+
     li s11, 0 # ouput of y
     li s9, 0 # placeholder variable
     call process_y
@@ -26,9 +29,6 @@ main_y:
 main:
     mv s4, s10  # copy the values of x
     mv s5, s11 # copy the values of y
-
-    slt t0, s10, s11 # if x < y : invalid 
-    bnez t0, end
     call gcd
 
 process_x:
@@ -228,6 +228,7 @@ store_y:
     mv s11, s9 # overwrites the buffer
     j main
 
+
 formatInteger:
     li t0, 10 #a
     mul s9, s9, t0
@@ -251,53 +252,52 @@ output:
 
     j end
 
+
 is_relprime:
     li t0, 1
     beq s10, t0, output
+
     bne s10, t0, factorization
+
+
+factorization:
+    li a7, 1
+
+    addi s8, s8, 1
+    
+    rem t0, s4, s8 # s4 % i == 0
+    xori t0, t0, 1 # == 1
+    rem t1, s5, s8 # s5 % i == 0
+    xori t1, t1, 1 # == 1
+    and t2, t1, t0 # divisible both
+
+    mv a0, s8
+    ecall 
+
+    beq s8, s4, end
+
+    j factorization
+
+    /*
+    for (int i = 0; i < s10; i++){
+        if (s4 % i == 0 && s5 % i == 0){
+            print(i)
+        }
+    }
+    */
 
 printNewLine:
     la a0, newline
     li a7, 4
     ecall
     jr x1
-    
-factors: 
-    li a7, 1
-    mv a0, s8
-    ecall 
-    call printNewLine
-    j factorization
-
-factorization:
-    li t5, 13
-    addi s8, s8, 1
-
-    # OR method
-    
-    # rem t0, s4, s8 # s4 % i == 0
-    # rem t1, s5, s8 # s5 % i == 0
-    # or t2, t1, t0 # divisible both
-
-    # beq s8, t5, end
-    # beqz t2, factors
-
-    # AND method
-
-    # rem t0, s4, s8 # s4 % i == 0
-    # xori t0, 1 # == 1
-    # rem t1, s5, s8 # s5 % i == 0
-    # xori t1, 1 # == 1
-    # and t2, t1, t0 # divisible both
-
-    # beq s8, t5, end
-    # bnez t2, factors
-
-    j factorization
-    
 end:
  # print outs
     li a7, 10
     ecall
     
     
+
+
+
+
