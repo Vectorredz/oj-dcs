@@ -1,4 +1,5 @@
-# Item 2
+# Laboratory Report 2: Item 2 - relprime.S
+
 .data
 buffer_x: .zero 30 # s2
 intbuffer_x: .zero 30 # s3
@@ -260,7 +261,7 @@ printNewLine:
     la a0, newline
     li a7, 4
     ecall
-    jr x1
+    ret
     
 factors: 
     li a7, 1
@@ -275,12 +276,12 @@ factorization:
 
     # OR method
     
-    # rem t0, s4, s8 # s4 % i == 0
-    # rem t1, s5, s8 # s5 % i == 0
-    # or t2, t1, t0 # divisible both
+    rem t0, s4, s8 # s4 % i == 0
+    rem t1, s5, s8 # s5 % i == 0
+    or t2, t1, t0 # divisible both
 
-    # beq s8, t5, end
-    # beqz t2, factors
+    beq s8, t5, end
+    beqz t2, factors
 
     # AND method
 

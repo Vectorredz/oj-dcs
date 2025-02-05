@@ -1,7 +1,5 @@
 # Checkpoint no. 1
 
-# edgecase 1: more than 30 bytes -> will return random counter
-
 .data
 buffer: .zero 30  # set the buffer to max 30 bytes with zeroes       
 
