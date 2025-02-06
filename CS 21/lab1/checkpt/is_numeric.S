@@ -1,10 +1,10 @@
-# Checkpoint no. 2: count_vowels.S
+# Checkpoint no. 2: is_numeric.S
 
 .data
 buffer: .zero 30
-prompt1: .string "\nINVALID"
-prompt2: .string "\nNUMERIC"
-prompt3: .string "\nNONNUMERIC"
+prompt1: .string "INVALID"
+prompt2: .string "NUMERIC"
+prompt3: .string "NONNUMERIC"
 
 .text
 main: 

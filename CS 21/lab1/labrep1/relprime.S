@@ -1,14 +1,13 @@
 # Laboratory Report 2: Item 2 - relprime.S
 
 .data
-buffer_x: .zero 30 # s2
-intbuffer_x: .zero 30 # s3
-buffer_y: .zero 30 # s4
-intbuffer_y: .zero 30 # s5
-prompt1: .string "enter x: "
-prompt2: .string "enter y: "
+buffer_x: .zero 30 
+intbuffer_x: .zero 30 
+buffer_y: .zero 30 
+intbuffer_y: .zero 30 
 prompt3: .string "VIVA"
 newline: .string "\n"
+
 .text
 main_x: 
     # <-------------- process input for x ---------------> #
@@ -36,16 +35,12 @@ process_x:
     # if x == 1 means that it is process x otherwise process y
     li s7, 1
 
-    li a7, 4
-    la a0, prompt1
-    ecall
-
     call input_x # call the input
     
     li s0, 0 # int i = 0 
     li s1, 0 # set the int flag = 0 # initialized as false hence non-numeric
     call loadbuffer_x # load the buffer_x
-    call charChecker
+    call charChecker # call the charChecker to check every single input
 
     ret
 
@@ -54,17 +49,13 @@ process_y:
     # if x == 0 means that it is process y otherwise process x
     li s7, 0
 
-    li a7, 4
-    la a0, prompt2
-    ecall
-
     call input_y # call the input
     
     li s0, 0 # int i = 0 
     li s1, 0 # set the int flag = 0 # initialized as false hence non-numeric
     
     call loadbuffer_y # load the buffer_y
-    call charChecker
+    call charChecker # call the charChecker to check every single input
 
     ret
 
@@ -83,7 +74,7 @@ input_x:
 input_y:
  # read input from the user
     li a7, 63
-    li a0, 0
+    li a0, 0 
     la a1, buffer_y # initialize the buffer_y to a1
     li a2, 30 # set max input 
 
@@ -94,7 +85,7 @@ input_y:
 
 charChecker:
     # load byte to access the values
-    lb s6, 0(s2)
+    lb s6, 0(s2) 
 
     addi s0, s0, 1 # increment the length
     addi s2, s2, 1 # increment the buffer_x'
@@ -109,27 +100,28 @@ charChecker:
     xori t2, t2, 1 # a0 <= 57
     xori t3, t3, 1 # a0 >= 48
     and t4, t3, t2 # 48 <= x <= 57
-    bnez t4, is_numeric
+    bnez t4, is_numeric # once the character is within the boundary 
     
     beq s6, t5, evaluator # if reach the end of the string
     
     # outside the condition
-    blt s6, t0, is_non_numeric
-    bgt s6, t1, is_non_numeric
+    blt s6, t0, is_non_numeric # 
+    bgt s6, t1, is_non_numeric # 
     
-    j charChecker
+    j charChecker # jump to charChecker again iterate the loop
 
 # convert the ascii to integer
 is_numeric:
     # set the flag to 1
-    addi s1, zero, 1 # flag = 1
+    addi s1, zero, 1 # int flag = 1
     j charChecker
     
 is_non_numeric:
-    addi s1, zero, 0 # flag = 0
+    addi s1, zero, 0 # int flag = 0
     j charChecker
 
 loadbuffer_x:
+    # 
     la s2, buffer_x
     la s3, intbuffer_x
     ret 
@@ -146,10 +138,11 @@ evaluator:
 
 input_classifier:
     # ask for input again because non-numeric
-    beqz s7, process_y
+    beqz s7, process_y 
     bnez s7, process_x
 
 loadbuffer_classifier:
+    # identify which buffer to load 
     beqz s7, bundle_y
     bnez s7, bundle_x
 
@@ -214,8 +207,9 @@ converter_y:
     j iterator_y
 
 output_classifier:
-    beqz s7, store_y
-    bnez s7, store_x
+    # determine where to store the output depending on the current input
+    beqz s7, store_y # jump to store_y to store the entered y input 
+    bnez s7, store_x # jump to store_x to store the entered x input 
 
 store_x:
     mv s10, s9 # overwrites the buffer
@@ -250,7 +244,7 @@ output:
 
 is_relprime:
     li t0, 1
-    beq s10, t0, output
+    beq s10, t0, output # if the output is 
     bne s10, t0, factorization
 
 printNewLine:
@@ -258,9 +252,9 @@ printNewLine:
     li a7, 4
     ecall
     ret
-    
+
 factors: 
-    li a7, 1
+    li a7, 1 
     mv a0, s8
     ecall 
     call printNewLine

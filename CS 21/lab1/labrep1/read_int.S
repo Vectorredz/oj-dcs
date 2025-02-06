@@ -65,10 +65,6 @@ copyBuffer:
     j loopBuffer
     
 formatInteger:
-    # result = 0
-    # result = 0 * 10 + 1
-    # result = 1 * 10 + 2
-    # result = 12 * 10 + 3
     li t0, 10
     mul s2, s2, t0
     add s2, s2, a0

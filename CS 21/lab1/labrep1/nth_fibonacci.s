@@ -1,30 +1,24 @@
 # Laboratory Report 3: Item 3 - nth_fibonacci.S
 
-data
-prompt: .string "enter: "
+.data
 newline: .string "\n"
 buffer: .zero 30
 intBuffer: .zero 30
 
 .text
 main:
-    li a7, 4
-    la a0, prompt
-
-    ecall
-
-    call askInput
+    call askInput # call to ask for inputs
     
-    call loadBuffers
+    call loadBuffers # call to load the buffers
     li s0, 0 # flag for negative numeric // int flag = false
     li s1, 0 # length of the input; how many digits in a number
     li s2, 0 # flag for is_numeric // int flag = false
     li s3, 0 # digit accumulator
-    call inputChecker
+    call inputChecker # call to check every character in the input
 
 askInput:
-    li a7, 63
-    li a0, 0
+    li a7, 63 # read input
+    li a0, 0 # stdin
     la a1, buffer # the input will be stored in a1
     li a2, 30
 
@@ -70,7 +64,7 @@ inputChecker:
     j inputChecker
 
 signed_flag:
-    li s0, 1
+    li s0, 1 # let flag = 1 if the input entered is negative
     j inputChecker
 
 is_numeric:
@@ -94,8 +88,8 @@ is_non_numeric:
     j inputChecker
 
 negateInteger:
-    li t0, -1
-    mul a0, a0, t0
+    li t0, -1 
+    mul a0, a0, t0 # multiply the final integer to -1 to negate
     j negated
     
     
@@ -165,6 +159,5 @@ printOne:
 end:
     li a7, 10
     ecall
-
 
 
