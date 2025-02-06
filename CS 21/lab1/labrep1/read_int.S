@@ -2,7 +2,7 @@
 
 .data
 buffer: .zero 30
-intbuffer: .zero 11
+intbuffer: .zero 10
 newline: .string "\n"
 
 .text
@@ -12,7 +12,7 @@ main:
     call loadBuffers # initialize the buffers into s registers
 
     li s3, 0 # int i = 0
-    li s4, 11 # x = 10; maxLength
+    li s4, 10 # x = 10; maxLength
     li s9, 0 # result = 0
 
     call loopBuffer # call the copyBuffer function and accept s0, s1, s2, s3
@@ -78,10 +78,6 @@ copyBuffer:
     j loopBuffer
     
 formatInteger:
-    # result = 0
-    # result = 0 * 10 + 1
-    # result = 1 * 10 + 2
-    # result = 12 * 10 + 3
     li t0, 10
     mul s9, s9, t0
     add s9, s9, s8
