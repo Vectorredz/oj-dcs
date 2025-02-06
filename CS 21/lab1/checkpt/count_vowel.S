@@ -1,4 +1,4 @@
-# Checkpoint no. 1
+# Checkpoint no. 1: count_vowels.S
 
 .data
 buffer: .zero 30  # set the buffer to max 30 bytes with zeroes       

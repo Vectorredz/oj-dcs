@@ -1,19 +1,18 @@
 # Laboratory Report 1: Item 1 - read_int.S
 
+# registers
+
 .data
 buffer: .zero 30
-intbuffer: .zero 11
 newline: .string "\n"
 
 .text
 main: 
     call input # call input function
-    
-    call loadBuffers # initialize the buffers into s registers
 
-    li s3, 0 # int i = 0
-    li s4, 11 # x = 10; maxLength
-    li s9, 0 # result = 0
+    li s0, 0 # int i = 0
+    li s1, 10 # int x = 10; maxLength
+    li s2, 0 # int z = 0; resultingInteger
 
     call loopBuffer # call the copyBuffer function and accept s0, s1, s2, s3
     
@@ -26,54 +25,42 @@ input:
     
     ret 
 
-loadBuffers:
-    la s0, buffer # load the buffer to s0
-    la s1, intbuffer # load the intbuffer to s1
-
-    ret # return s0, s1 to main
-
 loopBuffer:
-    lb s8, 0(s0) #  load byte buffer to s8 to access values
+    lb a0, 0(a1) #  int *a0 = &a1
 
-    li t1, 45 # ascii of '-'
-    li t2, 48 # ascii of '0'
-    li t3, 57 # ascii of '9'
-    li t4, 10 # ascii of '\n'
+    li s3, 45 # ascii of '-'
+    li s4, 48 # ascii of '0'
+    li s5, 57 # ascii of '9'
+    li s6, 10 # ascii of '\n'
     
-    addi s0, s0, 1 # s0 + 1 to access the next element
+    addi a1, a1, 1 # a1++
     
     # within the bounds (0-9)
-    slt s5, t3, s8 # s8 > 57
-    slt s6, s8, t2 # s8 < 48
-    xori s5, s5, 1 # s8 <= 57
-    xori s6, s6, 1 # s8 >= 48
-    and s7, s5, s6 # 48 <= s8 <= 57
-    bnez s7, copyBuffer
+    slt t0, s5, a0 # a0 > 57
+    slt t1, a0, s4 # a0 < 48
+    xori t0, t0, 1 # a0 <= 57
+    xori t1, t1, 1 # a0 >= 48
+    and t2, t0, t1 # 48 <= a0 <= 57
+
+    bnez t2, copyBuffer
     
-    beq s8, t1, loopBuffer # skip the '-'
-    beq s8, t4, doubleInteger
-    beq s3, s4, doubleInteger # if s3 == s4 j double
+    beq a0, s3, loopBuffer # skip the '-'
+    beq a0, s6, doubleInteger 
+    beq s0, s1, doubleInteger # if s0 == s1 j double
 
     ecall
 
     j loopBuffer    
 
 copyBuffer:
-    addi s8, s8, -48
-    sb s8, 0(s1) #  load s8 to s1
-    addi s3, s3, 1 # track the length of the buffer
-    
-    li a7, 1
-    mv a0, s8
+    addi a0, a0, -48 # convert the character from ascii to integer
 
-    ecall
+    addi s0, s0, 1 # track the length of the buffer
 
     # format the integer
     call formatInteger
     
-    addi s1, s1, 1 # s1 + 1 to access the next element
-    
-    beq s3, s4, doubleInteger # if s3 == s4 j double
+    beq s0, s1, doubleInteger # if s1 == s0 j double
 
     j loopBuffer
     
@@ -83,8 +70,8 @@ formatInteger:
     # result = 1 * 10 + 2
     # result = 12 * 10 + 3
     li t0, 10
-    mul s9, s9, t0
-    add s9, s9, s8
+    mul s2, s2, t0
+    add s2, s2, a0
     
     ret
 
@@ -96,12 +83,14 @@ printNewLine:
     
 doubleInteger:
     li t0, 2
-    mul s9, s9, t0
+    mul s2, s2, t0
     j end
     
 end:
-    call printNewLine
     li a7, 1
-    mv a0, s9
+    mv a0, s2
+    ecall
+    li a7, 1
+    mv a0, s0
     ecall
     

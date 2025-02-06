@@ -11,9 +11,8 @@ prompt3: .string "VIVA"
 newline: .string "\n"
 .text
 main_x: 
-
     # <-------------- process input for x ---------------> #
-    li s10, 0 # ouput of x
+    li s10, 0 # output of x
     li s9, 0 # placeholder variable
     call process_x
     
@@ -115,8 +114,8 @@ charChecker:
     beq s6, t5, evaluator # if reach the end of the string
     
     # outside the condition
-    blt s6, t0, non_numeric
-    bgt s6, t1, non_numeric
+    blt s6, t0, is_non_numeric
+    bgt s6, t1, is_non_numeric
     
     j charChecker
 
@@ -126,7 +125,7 @@ is_numeric:
     addi s1, zero, 1 # flag = 1
     j charChecker
     
-non_numeric:
+is_non_numeric:
     addi s1, zero, 0 # flag = 0
     j charChecker
 
@@ -157,10 +156,10 @@ loadbuffer_classifier:
 bundle_x:
     call loadbuffer_x
     j iterator_x
+
 bundle_y:
     call loadbuffer_y
     j iterator_y
-
 
 iterator_x:
     # load the buffer_x again
@@ -174,7 +173,6 @@ iterator_x:
     beq s6, zero, output_classifier
     
     call converter_classifier
-    
     
     j iterator_x
 
@@ -190,7 +188,6 @@ iterator_y:
     beq s6, zero, output_classifier
     
     call converter_classifier
-    
     
     j iterator_y
     
@@ -215,7 +212,6 @@ converter_y:
     addi s3, s3, 1
     
     j iterator_y
-
 
 output_classifier:
     beqz s7, store_y
@@ -273,8 +269,6 @@ factors:
 factorization:
     li t5, 13
     addi s8, s8, 1
-
-    # OR method
     
     rem t0, s4, s8 # s4 % i == 0
     rem t1, s5, s8 # s5 % i == 0
@@ -282,17 +276,6 @@ factorization:
 
     beq s8, t5, end
     beqz t2, factors
-
-    # AND method
-
-    # rem t0, s4, s8 # s4 % i == 0
-    # xori t0, 1 # == 1
-    # rem t1, s5, s8 # s5 % i == 0
-    # xori t1, 1 # == 1
-    # and t2, t1, t0 # divisible both
-
-    # beq s8, t5, end
-    # bnez t2, factors
 
     j factorization
     
