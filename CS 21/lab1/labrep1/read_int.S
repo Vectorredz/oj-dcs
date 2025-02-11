@@ -86,7 +86,6 @@ end:
     li a7, 1
     mv a0, s2
     ecall
-    li a7, 1
-    mv a0, s0
+    li a7, 10
     ecall
     

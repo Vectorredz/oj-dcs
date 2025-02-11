@@ -26,8 +26,12 @@ main:
     mv s4, s10  # copy the values of x
     mv s5, s11 # copy the values of y
 
-    slt t0, s10, s11 # if x < y : invalid 
-    bnez t0, end
+    # checks if x < y or x >= y
+    slt t0, s10, s11  # if x < y, need to swap x and y
+    beqz t0, gcd       # if x >= y, jump to the gcd
+    mv t1, s10         # swap: t1 = x
+    mv s10, s11        # x = y
+    mv s11, t1         # y = t1 
     call gcd
 
 process_x:
