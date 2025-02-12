@@ -3,6 +3,17 @@
 #include <string.h>
 #define MAX 100
 
+/*
+Edge cases:
+1. scoop < 0; invalid scoop
+    - doesnt accept the order
+    - cashier doesnt add
+    - discount doesnt add
+2. double order
+    - the 
+
+*/
+
 enum WeekDay{
     SUNDAY = 0, MONDAY = 1, TUESDAY = 2, WEDNESDAY = 3, THURSDAY = 4, FRIDAY = 5, SATURDAY = 6
 };
@@ -24,7 +35,7 @@ IceCreamStall *newIceCreamStall(){
     // initialize the scoops to 20
     IceCreamStall *p = (IceCreamStall*)malloc(sizeof(IceCreamStall));
     p->chili = 20;
-    p->chocolate = 20;
+    p->chocolate = 2;
     p->mango = 20;
     p->matcha = 20;
     p->oreo = 20;
