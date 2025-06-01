@@ -2,21 +2,14 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "type": "java",
-      "name": "TowerOfHanoiUsingStacks",
-      "request": "launch",
-      "mainClass": "TowerOfHanoiUsingStacks",
-      "projectName": "oj-dcs_18c92ee0"
-    },
-    {
       "name": "C/C++ Runner: Debug Session",
       "type": "cppdbg",
       "request": "launch",
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/louis/visual-studio/oj-dcs/CS 32/2ndSem/MP1",
-      "program": "c:/Users/louis/visual-studio/oj-dcs/CS 32/2ndSem/MP1/build/Debug/outDebug",
+      "cwd": "c:/Users/louis/visual-studio/oj-dcs/CS 32/2ndSem/ME08",
+      "program": "c:/Users/louis/visual-studio/oj-dcs/CS 32/2ndSem/ME08/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

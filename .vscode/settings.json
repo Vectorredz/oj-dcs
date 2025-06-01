@@ -5,7 +5,11 @@
     "compare": "c",
     "stdlib.h": "c",
     "assert.h": "c",
-    "stdint.h": "c"
+    "stdint.h": "c",
+    "array": "c",
+    "string_view": "c",
+    "initializer_list": "c",
+    "utility": "c"
   },
   "C_Cpp_Runner.cCompilerPath": "gcc",
   "C_Cpp_Runner.cppCompilerPath": "g++",
