@@ -1,0 +1,4 @@
+
+addi t1 zero 1
+addi a0 zero 0x201
+sw t1 0(a0)
