@@ -1,0 +1,19 @@
+"""
+Types of authentication
+1. Yes/No authentication
+- are you really who you say you are
+
+2. KYC  (Know your Customer)
+- I need to know who you are
+
+
+Modes of authentication
+1. Demo data
+2. BIometric data
+3. OTP
+
+Mosip AUthentication SDK
+1. Wrapper 
+2. take care of creating ecnrupting and sending API requests
+
+"""
