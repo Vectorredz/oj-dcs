@@ -118,7 +118,6 @@ BinaryTreeNode **read_input(int *size)
     
     while(scanf("%c", &symbol) != EOF)
     {
-        if (symbol == ';') break;
         if (n == 0)
         {
             array = (BinaryTreeNode **) malloc (sizeof(BinaryTreeNode *));
