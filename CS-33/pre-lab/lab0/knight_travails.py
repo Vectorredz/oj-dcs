@@ -1,10 +1,10 @@
 from collections import deque
 from typing import Deque
-row: int = 4
-col: int = 4
+row: int = 8
+col: int = 8
 board: list[list[int]] = [[0 if ((i+j) % 2 == 0) else 1 for j in range(col)] for i in range(row)]
 start: tuple[int, int] = (0,0)
-end: tuple[int, int] = (3,3)
+end: tuple[int, int] = (7,7)
 visited: set[tuple[int, int]] = set()
 parents: dict[tuple[int, int], list[tuple[int, int] | None]] = {}
 # Solving smaller problems
@@ -19,11 +19,9 @@ end the knight at [2,4]
 1 1 1
 
 """
-
 def knight_travails(board: list[list[int]], start: tuple[int, int], end: tuple[int, int]):
     def _within_bounds(x: int, y: int):
         return True if (0 <= x < col and 0 <= y < row) else False 
-
 
     def bfs():
         queue: Deque[tuple[int, int]] = deque()
@@ -55,26 +53,40 @@ def knight_travails(board: list[list[int]], start: tuple[int, int], end: tuple[i
         
     bfs()
 
-
     paths: list[list[tuple[int, int]]] = []
 
-    visited_parent = set()
-    def dfs(root: tuple[int, int] | None, path: list[tuple[int, int]]):
-        visited_parent.add(root)
+    # avoid cycles among the ancestors and parent 
+    
+    def dfs(root: tuple[int, int], path: list[tuple[int, int]]):
+        
+        # path.append(root)
+        
+        # if (root == start):
+        #     paths.append(path.copy())
+        # else:
+        #     for parent in parents[root]:
+        #        return dfs(parent, path)
+            
+        # path.remove(root)
+        
+     
         if (root == None):
             paths.append(path)
             return root
+        
         else:
             path.append(root) # adds the current root to the sub path [(1,2), (0,0)]
             for parent in parents[root]:
-                if (parent not in visited_parent):
+                if (parent not in path):
                     dfs(parent, path.copy())
             return path
 
 
     dfs(end, [])
     print(paths)
-    # print(parents)
+
+    # print(parents[end])
+    
 knight_travails(board, start, end)
 
 
