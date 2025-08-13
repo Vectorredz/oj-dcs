@@ -10,7 +10,7 @@ grid = [ [ 1, 3, 5],
 def _get_paths(grid: list[list[int]]):
     visited: list[tuple[int, int]] = []
     parents: dict[tuple[int, int], list[tuple[int, int]]] = {}
-    end: tuple[int, int] = ()
+    end: tuple[int, int] = tuple()
     queue: Deque[tuple[int, int]] = deque()    
     
     def _within_bounds(child_dir: tuple[int ,int]):
@@ -55,8 +55,10 @@ def _get_paths(grid: list[list[int]]):
             return path
     
     dfs((1,2), [])
+
+    grid_paths: list[list[int]] = list(map(lambda coord: [grid[c[0]][c[1]] for c in coord], paths))
+    print(grid_paths)
     print(paths)
-            
 _get_paths(grid)        
     
                 
