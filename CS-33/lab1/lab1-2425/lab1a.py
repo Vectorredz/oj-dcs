@@ -1,5 +1,5 @@
 # add edges until no cycle
-from typing import Sequence
+from collections.abc import Sequence
 
 class UnionFind:
     def __init__(self, n: int):
@@ -10,7 +10,7 @@ class UnionFind:
         if (self.parent[i] == i):
             return i
         else:
-            self.parent[i] = self.parent[self.parent[i]]
+            self.parent[i] = self[self.parent[i]]
             return self.parent[i]
     def unite(self, i, j):
         if ((i := self[i]) == (j := self[j])):
@@ -64,6 +64,7 @@ def min_ladders(mountain: Sequence[Sequence[int]]) -> int:
     vertices = len(mountain) * len(mountain[0])
     mst = []
     same_height = 0
+    ladders = 0
 
     # try kruskals
     
@@ -82,67 +83,69 @@ def min_ladders(mountain: Sequence[Sequence[int]]) -> int:
         u, v = pair
         if (components.unite(u, v)):
             mst.append((u,v))
+            ladders += elevation
     
-    return len(mst)
+    
+    return ladders
+    # print(rem_edges)
+
+        
+print(min_ladders([[1, 3, 2]]))
+
+
 
 # # Reverse-delete
 
-def make_adjacency_list(edges, n):
-    adj_list = [[] for _ in range(n)]
-    for pair, w in edges:
-        u, v = pair
-        adj_list[u].append(v)
-        adj_list[v].append(u)
+# def make_adjacency_list(edges, n):
+#     adj_list = [[] for _ in range(n)]
+#     for pair, w in edges:
+#         u, v = pair
+#         adj_list[u].append(v)
+#         adj_list[v].append(u)
     
-    return adj_list
+#     return adj_list
 
-def min_ladders(edges):
-    # sort heavy → light
-    n = len(edges) * len(edges[0])
-    edges = sorted(make_edges_list(edges), key=lambda x: x[1], reverse=True)
-    mst = edges[:]  # start with full graph
+# def min_ladders(edges):
+#     # sort heavy → light
+#     n = len(edges) * len(edges[0])
+#     edges = sorted(make_edges_list(edges), key=lambda x: x[1], reverse=True)
+#     mst = edges[:]  # start with full graph
     
-    for edge in edges:
-        mst.remove(edge)
-        adj_list = make_adjacency_list(mst, n)
-        if not connected(adj_list, n):
-            mst.append(edge) 
+#     for edge in edges:
+#         mst.remove(edge)
+#         adj_list = make_adjacency_list(mst, n)
+#         if not connected(adj_list, n):
+#             mst.append(edge) 
     
-    return len(mst), mst
+#     return len(mst), mst
 
 
-def connected(adj_list, n):
+# def connected(adj_list, n):
 
-    # count num of components
-    components = []
-    stack = []
-    visited = [False] * n 
-    def dfs(src):
-        component = []
-        if (not visited[src]):
-            stack.append(src)
-            visited[src] = True
+#     # count num of components
+#     components = []
+#     stack = []
+#     visited = [False] * n 
+#     def dfs(src):
+#         component = []
+#         if (not visited[src]):
+#             stack.append(src)
+#             visited[src] = True
             
-        while (stack):
-            node = stack.pop()
-            component.append(node)
-            for vertex in adj_list[node]:
-                if (not visited[vertex]):
-                    stack.append(vertex)
-                    visited[vertex] = True
+#         while (stack):
+#             node = stack.pop()
+#             component.append(node)
+#             for vertex in adj_list[node]:
+#                 if (not visited[vertex]):
+#                     stack.append(vertex)
+#                     visited[vertex] = True
         
-        return component
+#         return component
     
-    for i in range(len(adj_list)):
-        components.append(dfs(i))
+#     for i in range(len(adj_list)):
+#         components.append(dfs(i))
     
-    return True if len(list(filter(lambda x: len(x) > 0, components))) == 1 else False
-        
-print(min_ladders([
-    [1, 2, 2],
-    [3, 2, 5],
-    [4, 5, 5]
-]))
+#     return True if len(list(filter(lambda x: len(x) > 0, components))) == 1 else False
 # assert min_ladders([
 #     [2, 1, 2],
 #     [2, 1, 2],

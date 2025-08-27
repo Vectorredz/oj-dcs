@@ -1,16 +1,18 @@
 # given list of edges create adjacency list
+from collections.abc import Sequence
+type Line = tuple[tuple[int, int], int]
 
 class UnionFind:
     def __init__(self, n):
-        self.parent = [*range(n + 1)]
-        self.weight = [1] * (n + 1)
+        self.parent = [*range(n)]
+        self.weight = [1] * (n)
         super().__init__()
         
     def __getitem__(self, i):
         if (self.parent[i] == i):
             return i
         else:
-            self.parent[i] = self.parent[self.parent[i]]
+            self.parent[i] = self[self.parent[i]]
             return self.parent[i]
             
     def unite(self, i, j):
@@ -26,15 +28,18 @@ class UnionFind:
         self.parent[i] = j
 
         return True
+    
 
-def kruskals(n: int, edges: list[tuple[tuple[int, int], int]]):
-    mst = []
+
+def max_tracks(n: int, lines: Sequence[Line]) -> tuple[int, list[int]]:
     # # sort the edges
-    components = UnionFind(n)
+    components = UnionFind(n + 1)
     used_tracks = 0
     total_tracks  = 0
     free_tracks = []
-    edges = sorted(edges, key=lambda edge: edge[1])
+    ret = []
+    mst = []
+    edges = sorted(lines, key=lambda edge: edge[1])
     # loop onto the edges until no cycle is form
     for edge, w in edges:
         i, j = edge
@@ -42,9 +47,17 @@ def kruskals(n: int, edges: list[tuple[tuple[int, int], int]]):
             mst.append((i,j))
             used_tracks += w
         else:
-            free_tracks.append(edges.index(((i,j), w)) + 1)
+            free_tracks.append((edge, w))
         total_tracks += w
-    return total_tracks - used_tracks, free_tracks
+        
+    hack = {edges: idx for idx, edges in enumerate(lines)}
+        
+    for coord in free_tracks:
+        ret.append(hack[coord] + 1)
+        
+        
+    ans = (abs(total_tracks - used_tracks), ret)
+    return ans
     
     
 
@@ -59,10 +72,9 @@ def kruskals(n: int, edges: list[tuple[tuple[int, int], int]]):
     
 #     print(adj_list, v)
 
+print(max_tracks(3, [
+        ((1, 2), 5),
+        ((2, 3), 6),
+        ((3, 1), 7),
+    ]))
 
-x = kruskals(3, [
-    ((1, 2), 5),
-    ((2, 3), 6),
-    ((3, 1), 7),
-    ])
-print(x)
