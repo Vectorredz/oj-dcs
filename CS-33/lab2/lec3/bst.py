@@ -1,4 +1,13 @@
 from dataclasses import dataclass
+
+# inorder
+# contains
+# add
+# remove_leftmost
+# remove
+# next_larger
+# next_smaller
+
 @dataclass
 class Node:
     val: int
