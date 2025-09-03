@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 # join
 # height
@@ -11,12 +12,16 @@
 
 from dataclasses import dataclass
 
+=======
+from dataclasses import dataclass
+>>>>>>> 99e6747c53e813e1567c736ac3a91fa7e5c32b23
 @dataclass
 class Node:
     val: int
     h: int = 0
     l: "Node | None" = None
     r: "Node | None" = None
+<<<<<<< HEAD
     
     def reset_height(self):
         self.h = max(height(self.l), height(self.r)) + 1
@@ -31,6 +36,17 @@ def contains(node, val):
     
 def join(l, x, r):
     x.l = l
+=======
+
+    def reset_height(self):
+        # height h of the tree
+        self.h = max(height(self.l), height(self.r)) + 1
+
+def join(l, x, r):
+    # left subtree as the left split
+    x.l = l
+    # right subtree as the right split
+>>>>>>> 99e6747c53e813e1567c736ac3a91fa7e5c32b23
     x.r = r
     x.reset_height()
     return x
@@ -49,42 +65,73 @@ def right_rotate(x):
 def rebalance(x):
     if x is not None:
         x.reset_height()
-        # ll rotation
-        if (height(x.l) >= height(x.r) + 2):
-            if (height(x.l.l) < height(x.r.l)):
-                x.l = left_rotate(x)
+        # unbalanced tree s.t. bf > 1 where heavy left-heavy
+        if height(x.l) - height(x.r) >= 2:
+            # LR-rotation
+            if height(x.l.l) < height(x.l.r):
+                x.l = left_rotate(x.l)
+            # RR rotation
             x = right_rotate(x)
-        elif (height(x.r) >= height(x.l) + 2):
-            if (height(x.r.r) < height(x.r.l)):
-                x.r = right_rotate(x)
+        elif height(x.r) - height(x.l) >= 2:
+            # RL-rotation
+            if height(x.r.r) < height(x.r.l):
+                x.r = right_rotate(x.r)
+            # LL-ROTATION
             x = left_rotate(x)
     return x
-
-def _add(node, val):
-    if (node is None):
-       return Node(val, 0, None, None) 
-    elif val > node.val:
-        node.r = _add(node.r, val)
-        return node
-    elif val < node.val:
-        node.l = _add(node.l, val)
-        return node
-    elif val == node.val:
-        return None
 
 def add(node, val):
     return rebalance(_add(node, val))
 
-def _remove_leftmost(node):
-    if node.l is None: 
-        return node.val, node.r
-    (val, subtree) = _remove_leftmost(node.l)
-    node.l = subtree
-    node.val = val
-    return val, node
+def _add(node, val):
+    if (node is None):
+        return Node(val, 0, None, None)
+    elif (val > node.val):
+        node.r = _add(node.r, val)
+    elif (val < node.val):
+        node.l = _add(node.l, val)
+    else:
+        assert val == node.val
+    return node
 
+def contains(node, val):
+    if (node is None):
+        return False
+    elif (val < node.val):
+        return contains(node.l, val)
+    elif (val > node.val):
+        return contains(node.r, val)
+    elif (val == node.val):
+        return True
+    
 def remove_leftmost(node):
-    val, node = _remove_leftmost(node)    
-    return val, rebalance(node)
+    assert node is not None
 
+    if node.l is None:
+        return node.val, node.r
+    else:
+        v, x = remove_leftmost(node.l)
+        node.l = x
+        return v, node
 
+def remove(node, val):
+    return rebalance(_remove(node, val))
+
+def _remove(node, val):
+    if (node is None):
+        return None
+    elif (val > node.val):
+        node.r = _remove(node.r, val)
+        return node
+    elif (val < node.val):
+        node.l = _remove(node.l, val)
+        return node
+    elif (val == node.val):
+        if node.r is None:
+            return node.l
+        else:
+            v,x = remove_leftmost(node.r)
+            node.r = x
+            node.val = v
+            return node
+            
