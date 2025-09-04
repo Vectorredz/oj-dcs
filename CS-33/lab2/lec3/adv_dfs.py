@@ -6,6 +6,11 @@ from dataclasses import dataclass
 class Edge:
     i: int
     j: int
+    
+# 1. make adj list
+# 2. disc, low, -> -1; time -> 0
+# 3. dfs(i, parent_idx, is_root)
+# 4. 
 
 def bridges_and_artic_points(n, edges):
     # create adj_list 
@@ -25,6 +30,7 @@ def bridges_and_artic_points(n, edges):
         nonlocal time
         assert disc[i] == -1
 
+        # update the disc the time
         disc[i] = time; time += 1
         low[i] = disc[i]
 

@@ -1,0 +1,18 @@
+# AVL
+
+- Node class
+- reset_height(self)
+- height(node)
+- join(l,x,r)
+- rotate_left(x)
+- rotate_right(x)
+- rebalance(x)
+- insert(node, val)
+- remove_smallest(node)
+- remove(node, val)
+
+# Kosaraju
+
+- disc/order, temp, visited
+- First pass: dfs first then store the nodes in postorder, below the loop
+
