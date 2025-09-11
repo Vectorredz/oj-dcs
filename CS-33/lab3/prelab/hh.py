@@ -82,6 +82,26 @@ def has_eulerian(n: int, edges: list[tuple[int, int]]):
     else:
         return False
     
+def eulerian_path(n, edges):
+    degs = [0]*n
+    for edge in edges:
+        degs[edge.i] += 1
+        degs[edge.j] += 1
+
+    bads = [i for i in range(n) if degs[i] % 2]
+    assert len(bads) % 2 == 0
+
+    match bads:
+        case []:
+            return [*hh(n, edges)]
+        case [a, b]:
+            dummy = Edge(i=a, j=b, idx=len(edges))
+            cyc = [*hh(n, [*edges, dummy])]
+            idx = cyc.index(dummy)
+            return [*cyc[idx+1:], *cyc[:idx]]
+        case _:
+            return None
+    
               
 edges = [(0, 1), (1, 2), (2, 0)]
 n = 3
