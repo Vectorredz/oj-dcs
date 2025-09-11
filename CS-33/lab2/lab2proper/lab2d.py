@@ -18,7 +18,7 @@ def all_jammables(freqs_of_radios: Sequence[Sequence[int]]) -> list[tuple[int, i
             radio.add(f)
             valid_pairs[i].append(f) 
             guards[f].append(i)
-            edges.append(edge)
+            edges.append(edge)mk
             
     freq_id = {f: n + idx for idx, f in enumerate(list(radio)) }
     freq_idp = {n + idx: f for idx, f in enumerate(list(radio)) }
