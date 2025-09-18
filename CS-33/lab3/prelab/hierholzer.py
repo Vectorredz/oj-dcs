@@ -23,20 +23,14 @@ def eulerian_cycle(n: int, edges: list[Edge], start=0):
     # 2. Consume edges: exhaust the edges until no more unvisited edges
     def consume(i: int):
         curr: int = i
-        # while (adj[curr]):
-        #     j, edge = adj[curr].pop()
-        #     assert 0 <= edge.idx < len(edges)
-        #     if not visited_edges[edge.idx]:
-        #         visited_edges[edge.idx] = True
-        #         curr = j 
-        #         yield curr, edge
-        # assert curr == i
-        
-        for j, edge in reversed(adj[curr]):
+        while (adj[curr]):
+            j, edge = adj[curr].pop()
+            assert 0 <= edge.idx < len(edges)
             if not visited_edges[edge.idx]:
                 visited_edges[edge.idx] = True
-                curr = j
+                curr = j 
                 yield curr, edge
+        assert curr == i
         
     # 3. considering stack
     considering = deque([(start, None)])

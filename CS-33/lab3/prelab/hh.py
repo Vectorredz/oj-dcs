@@ -107,7 +107,8 @@ edges = [(0, 1), (1, 2), (2, 0)]
 n = 3
 
 
-assert has_eulerian(3,edges ) == True
+# assert (3,edges ) == 
+
 # result = list(hh(n, edges))
 # print(result)
 

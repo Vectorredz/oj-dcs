@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/louis/visual-studio/acads/oj-dcs/cs-33/lab2/lab2proper",
-      "program": "c:/Users/louis/visual-studio/acads/oj-dcs/cs-33/lab2/lab2proper/build/Debug/outDebug",
+      "cwd": "c:/Users/louis/visual-studio/acads/oj-dcs/CS-33/lab3/labproper",
+      "program": "c:/Users/louis/visual-studio/acads/oj-dcs/CS-33/lab3/labproper/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
