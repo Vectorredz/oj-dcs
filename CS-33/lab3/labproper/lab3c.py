@@ -147,3 +147,17 @@ class TropicalResort:
         ret = self.lca(s,t)        
         loners = self.odds[s] + self.odds[t] - (2 * self.odds[ret]) + (self.population[ret] % 2)
         return loners
+    
+
+def test_TropicalResort():
+    tropical_resort = TropicalResort(
+        (2, 7, 1, 8, 2),
+        ((0, 1), (1, 2), (2, 3), (2, 4)),
+    )
+
+    # assert tropical_resort.count_calming_locations(0, 3) == 2
+    # assert tropical_resort.count_calming_locations(3, 0) == 2
+    # assert tropical_resort.count_calming_locations(4, 3) == 1
+    x = tropical_resort.count_calming_locations(3, 1)
+    print(x)
+test_TropicalResort()

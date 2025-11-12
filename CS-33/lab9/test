@@ -1,0 +1,41 @@
+from collections.abc import Sequence
+
+def _gcd(a, b):
+    if a < b: a, b = b, a
+    if a == 0 or b == 0:
+        return a
+    return _gcd(b, a % b)
+
+def update(b, gcd):
+    for elem in gcd:
+        if ((y:=_gcd(b, elem)) == 1):
+            continue
+        else:
+            c = gcd.index(b)
+            d = gcd.index(elem)
+            print(c, d)
+
+def find_decomposition(f: Sequence[int]) -> tuple[list[int], list[list[int]]]:
+    """
+    1. traverse from left to right getting the gcd
+    2. check if the array is co prime
+    3. update the factors
+    """
+    gcd = []
+    n: int = len(f)
+    for i in range(n-2+1):
+        a = i
+        b = i+2-1
+        if ((x := _gcd(f[a], f[b])) == 1): # coprime
+            gcd.append(f[a])
+            update(f[a], gcd)
+            gcd.append(f[b])
+            update(f[b], gcd)
+        else:
+            gcd.append(x)
+    print(gcd)
+
+find_decomposition([9,11,1 ])
+    
+
+
