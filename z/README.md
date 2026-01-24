@@ -1,1 +1,0 @@
-# UPD-Online-Judge-Laboratories
